@@ -2,10 +2,10 @@ class Snake {
     constructor(pos, dir) {
       this.pos = pos;
       this.dir = dir;
-      this.body = [pos]
+      this.body = [pos, this.addVec(this.pos, this.dir)]
       this.growing = false;
     }
-
+    
     addVec(v1, v2){
         var result = [];
         for (var i in v1) {
