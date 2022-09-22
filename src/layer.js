@@ -5,7 +5,7 @@ class Layer {
         this.map = map;
     }
 
-    draw(ctx, blocks, blkSize=25) {
+    draw(ctx, blocks, blkSize=20) {
         for (var row=0; row<this.rows; row++) {
             for (var col=0; col<this.cols; col++) {
                 var pox = row * blkSize;

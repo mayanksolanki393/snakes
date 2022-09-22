@@ -20,8 +20,8 @@ var KEY = {
   };
 
 class Controller {
-    constructor(board, snake) {
-        this.board = board;
+    constructor(snake) {
+        //this.board = board;
         this.snake = snake;
         this.input = { left: false, right: false, up: false, down: false, }
     }
