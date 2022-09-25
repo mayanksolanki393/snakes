@@ -2,6 +2,9 @@
 
 
 # Features to support
-New Framework based on Map
-Ability to add a custom map
-
+- Level Designer
+- ~~Collision detection system~~
+- Automate Algorithm
+- Change Controllers
+- Full screen mode
+- support mobile

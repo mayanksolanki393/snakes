@@ -54,7 +54,7 @@ class Snake {
         this.growing = true;
     }
 
-    update() {
+    update(collision) {
         this.pos = this.addVec(this.pos, this.dir);
         
         if (this.growing) {
@@ -64,6 +64,8 @@ class Snake {
             this.body.pop();
         }
         this.body.unshift(this.pos);
+
+        return collision[this.pos[0]][this.pos[1]] == 1;
     }
 
     compareVec(vec1, vec2) {
