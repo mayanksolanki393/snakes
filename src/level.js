@@ -44,6 +44,7 @@ class Level {
         this.blkSize = Math.min(blkHeight, blkWidth);
         this.layers.push("moveable");
         this.moveable = Array(this.rows).fill().map(() => Array(this.cols).fill(0));
+        this.abstracted = Array(this.rows).fill().map(() => Array(this.cols).fill(0));
     }
 
     clearLayer(layer) {
@@ -62,5 +63,22 @@ class Level {
                 }
             }
         }
+    }
+
+    getAbstracted() {
+        this.clearLayer(this.abstracted);
+
+        for (var layer of this.layers) {
+            if (layer == "background") continue;
+            for (var row=0; row<this.rows; row++) {
+                for (var col=0; col<this.cols; col++) {
+                    var blockIdx = this[layer][row][col];
+                    if (blockIdx != 0) {
+                        this.abstracted[row][col] = 1;
+                    } 
+                }
+            }
+        }
+        return this.abstracted;
     }
 }

@@ -134,6 +134,15 @@ class Snake {
     down() {
         if (!this.compareVec(this.dir, Snake.DIRECTION.UP)) this.dir = [1, 0];
     }
+
+    move(direction) {
+        switch (direction) {
+            case "left" : this.left(); break;
+            case "right" : this.right(); break;
+            case "up" : this.up(); break;
+            case "down" : this.down(); break;
+        }
+    }
   }
 
 class Apple {
