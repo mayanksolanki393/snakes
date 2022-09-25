@@ -42,7 +42,7 @@ class Snake {
       this.growing = false;
     }
     
-    addVec(v1, v2){
+    addVec(v1, v2) {
         var result = [];
         for (var i in v1) {
             result.push(v1[i] + v2[i]);
@@ -50,22 +50,27 @@ class Snake {
         return result;
     }
 
-    grow(){
+    grow() {
         this.growing = true;
     }
 
-    update(collision) {
+    update(collision, moveable) {
         this.pos = this.addVec(this.pos, this.dir);
         
         if (this.growing) {
             this.growing = false;
         }
         else {
-            this.body.pop();
+            var tail = this.body.pop();
+            moveable[tail[0]][tail[1]] = 0;
         }
         this.body.unshift(this.pos);
 
-        return collision[this.pos[0]][this.pos[1]] == 1;
+        if (moveable[this.pos[0]][this.pos[1]] == 15) {
+            this.grow();
+            moveable[this.pos[0]][this.pos[1]] = 0;
+        }
+        return collision[this.pos[0]][this.pos[1]] != 0 || moveable[this.pos[0]][this.pos[1]] != 0;
     }
 
     compareVec(vec1, vec2) {
@@ -114,19 +119,55 @@ class Snake {
         layer[loc[0]][loc[1]] = this.SNAKE_TAIL[prevDir];
     }
 
-    left(){
-        this.dir = [0, -1];
+    left() {
+        if (!this.compareVec(this.dir, Snake.DIRECTION.RIGHT)) this.dir = [0, -1];
     }
 
-    right(){
-        this.dir = [0, 1];
+    right() {
+        if (!this.compareVec(this.dir, Snake.DIRECTION.LEFT)) this.dir = [0, 1];
     }
 
-    up(){
-        this.dir = [-1, 0];
+    up() {
+        if (!this.compareVec(this.dir, Snake.DIRECTION.DOWN)) this.dir = [-1, 0];
     }
 
-    down(){
-        this.dir = [1, 0];
+    down() {
+        if (!this.compareVec(this.dir, Snake.DIRECTION.UP)) this.dir = [1, 0];
     }
   }
+
+class Apple {
+    constructor() {
+        this.isVisible = false;
+    }
+
+    generateRandom(collision, moveable) {
+        var rows = collision.length;
+        var cols = collision[0].length; 
+        var pos_x = Math.floor(Math.random() * cols);
+        var pos_y = Math.floor(Math.random() * rows);
+
+        while (collision[pos_y][pos_x] != 0 || moveable[pos_y][pos_x] != 0) {
+            pos_x = Math.floor(Math.random() * cols);
+            pos_y = Math.floor(Math.random() * rows);
+        }
+
+        this.pos_x = pos_x;
+        this.pos_y = pos_y;
+    }
+
+    update(collision, moveable, snake_head) {
+        if (this.isVisible) {
+            if (snake_head[0] == this.pos_y && snake_head[1] == this.pos_x) 
+                this.isVisible = false;
+        }
+        else if (Math.floor(Math.random() * 30) == 1) {
+            this.generateRandom(collision, moveable);
+            this.isVisible = true;
+        }
+    }
+
+    updateLayer(layer) {
+        if (this.isVisible) layer[this.pos_y][this.pos_x] = 15;
+    }
+}

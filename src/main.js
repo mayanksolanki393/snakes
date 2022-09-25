@@ -6,8 +6,11 @@ var snake = new Snake([10,10], Snake.DIRECTION.RIGHT);
 var controller = new Controller(snake);
 controller.init(controller);
 
+var apples = [new Apple(), new Apple(), new Apple(), new Apple(), new Apple()];
+
 var level = null;
 var gameLoop = null;
+var playing = true;
 function init() {
     console.log("init-called");
     var xhttp = new XMLHttpRequest();
@@ -24,14 +27,19 @@ function init() {
 }
 
 function update() {
-    var collision = snake.update(level.collision);
+    var collision = snake.update(level.collision, level.moveable);
     if (collision) {
         alert("Game Over!");
         clearInterval(gameLoop);
+        playing = false;
     }
-    updateLayer = level.getFreshLayer();
-    snake.updateLayer(updateLayer);
-    level.moveable = updateLayer;
+    level.clearLayer(level.moveable);
+    snake.updateLayer(level.moveable);
+
+    for (var apple of apples) {
+        apple.update(level.collision, level.moveable, snake.pos);
+        apple.updateLayer(level.moveable);
+    }
 }
 
 function draw() {
@@ -42,7 +50,7 @@ function draw() {
 
 function loop() {
     update();
-    draw();
+    if (playing) draw();
 }
 
 init();

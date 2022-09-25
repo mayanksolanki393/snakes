@@ -32,7 +32,8 @@ BLOCKS = {
     ],
     "collision" : [
         newBlock(""),
-        newBlock("assets/bg/collision.png"),  // 1
+        newBlock(""),
+        //newBlock("assets/bg/collision.png"),  // 1
     ]
 };
 
@@ -42,10 +43,11 @@ class Level {
         var blkWidth = Math.floor(canvasWidth / level.cols);
         this.blkSize = Math.min(blkHeight, blkWidth);
         this.layers.push("moveable");
+        this.moveable = Array(this.rows).fill().map(() => Array(this.cols).fill(0));
     }
 
-    getFreshLayer () {
-        return Array(this.rows).fill().map(() => Array(this.cols).fill(0));
+    clearLayer(layer) {
+        layer.forEach((row) => row.fill(0));
     }
 
     drawLevel(ctx) {
