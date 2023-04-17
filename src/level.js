@@ -8,7 +8,7 @@ function newBlock(src) {
 BLOCKS = {
     "background" : [
         newBlock(""),
-        newBlock("assets/bg/light.png"),
+        newBlock("assets/bg/dark.png"),
         newBlock("assets/bg/dark.png"),
         newBlock("assets/bg/wall.png"),
     ],

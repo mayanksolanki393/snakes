@@ -136,11 +136,8 @@ class BFSController {
             else if (abstracted[poy-1][pox] == 0) moves.push("up");
             else moves.push("down");
         }
-        
-        if (moves.length > 25) {
-            console.log("what");
-        }
-        this.moves = moves;
+        ``
+        this.moves = [moves[0]];
     }
 
     getNextMove(abstracted, snake_head) {
