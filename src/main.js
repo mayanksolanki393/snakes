@@ -17,7 +17,12 @@ function init() {
         if (this.readyState == 4 && this.status == 200) {
             level = JSON.parse(this.responseText);
             Object.setPrototypeOf(level, Level.prototype);
-            level.init(c.height, c.width);
+            var blkHeight = Math.floor(window.innerHeight / level.rows);
+            var blkWidth = Math.floor(window.innerWidth / level.cols);
+            var blkSize = Math.min(blkHeight, blkWidth);
+            ctx.canvas.width = level.cols * blkSize;
+            ctx.canvas.height = level.rows * blkSize;
+            level.init(blkSize);
 
             if (manual) {
                 controller = new Controller(snake);

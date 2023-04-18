@@ -38,10 +38,8 @@ BLOCKS = {
 };
 
 class Level {
-    init(canvasHeight, canvasWidth) {
-        var blkHeight = Math.floor(canvasHeight / level.rows);
-        var blkWidth = Math.floor(canvasWidth / level.cols);
-        this.blkSize = Math.min(blkHeight, blkWidth);
+    init(blkSize) {
+        this.blkSize = blkSize;
         this.layers.push("moveable");
         this.moveable = Array(this.rows).fill().map(() => Array(this.cols).fill(0));
         this.abstracted = Array(this.rows).fill().map(() => Array(this.cols).fill(0));
